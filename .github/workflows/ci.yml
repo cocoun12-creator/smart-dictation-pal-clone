@@ -22,12 +22,11 @@ jobs:
       - name: Build web (frontend)
         working-directory: web
         run: |
-          npm ci
-          npm run build
+          npm install --no-audit --prefer-offline --no-progress npm run build
 
       - name: Install server dependencies
         working-directory: server
-        run: npm ci
+        run: npm install --no-audit --prefer-offline --no-progress
 
       - name: Start server
         run: |
