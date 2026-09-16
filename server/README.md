@@ -11,6 +11,8 @@ This server provides two endpoints used by the frontend:
 
   - If WHISPER_CMD_TEMPLATE is not set, the endpoint returns 501 with a helpful message.
 
+  - The server now includes ffmpeg in the Docker image and will automatically convert uploaded audio files to 16kHz mono 16-bit WAV using ffmpeg if the uploaded file is not already a WAV. This improves compatibility with whisper.cpp and other CLI ASR tools.
+
 - POST /api/ocr
   - multipart/form-data: file (image)
   - Behaviour: uses Tesseract.js (node) to OCR the image and returns the recognized text.
@@ -41,6 +43,6 @@ Docker usage (recommended)
 
 Notes and troubleshooting
 - Models and binaries are NOT baked into the Docker image — mount them into ./whisper and point WHISPER_CMD_TEMPLATE to the mounted path.
-- If you get errors about permissions when the container tries to execute the binary, ensure the mounted `main` binary has execute permission (chmod +x main) on the host before starting the container.
-- Keep an eye on container logs for ASR errors: `docker compose logs server -f`.
+- The server image now includes ffmpeg for on-the-fly audio conversion. If you get errors about permissions when the container tries to execute the unary binary, ensure the mounted `main` binary has execute permission (chmod +x main) on the host before starting the container.
+- Keep an eye on container logs for ASR or conversion errors: `docker compose logs server -f`.
 
