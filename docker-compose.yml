@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  server:
+    build: ./server
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - WHISPER_CMD_TEMPLATE=${WHISPER_CMD_TEMPLATE}
+      - WHISPER_MODEL=${WHISPER_MODEL}
+    volumes:
+      - ./server/uploads:/app/uploads
+      # Mount your whisper binary and models into the container at /opt/whisper
+      - ./whisper:/opt/whisper
+    restart: unless-stopped
